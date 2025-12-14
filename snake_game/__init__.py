@@ -1,0 +1,1 @@
+# This file makes the 'snake_game' directory a Python package.
