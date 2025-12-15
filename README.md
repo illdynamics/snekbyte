@@ -1,6 +1,6 @@
-# Snake Game
+# Snek-Game
 
-This is a classic snake game built with Python and Pygame.
+This is a classic snake game built with Python and Pygame, with a twist!
 
 ### Quickstart
 
@@ -13,7 +13,7 @@ This is a classic snake game built with Python and Pygame.
 2.  **Run the Game:**
     This command starts the game.
     ```bash
-    python main.py
+    python src/main.py
     ```
 
 3.  **How to Play:**
@@ -22,10 +22,23 @@ This is a classic snake game built with Python and Pygame.
     *   Avoid running into the walls or the snake's own body.
     *   Press the **ESC key** to quit.
 
+### WoNQ Mode
+
+This game includes a special, challenging mode called "WoNQ Mode".
+
+**How to activate WoNQ Mode:**
+1.  From the main menu, select "Settings".
+2.  Toggle "WoNQ Mode" to "On".
+
+**What is WoNQ Mode?**
+When playing in WoNQ Mode, the snake will drop a "poop" obstacle every time it eats 5 pieces of food. These poop obstacles are persistent and will end the game if the snake collides with them. Keep an eye on the "Poop-o-meter" in the UI to see how close you are to dropping a poop!
+
 ### How it Works
 
-*   **`main.py`**: The entry point that runs the main game loop.
-*   **`snake_game/core.py`**: Contains the core game logic, like snake movement and collision.
-*   **`snake_game/rendering.py`**: Handles drawing the snake, food, and score.
-*   **`snake_game/input_handling.py`**: Manages player controls from the keyboard.
-*   **`snake_game/config.py`**: Stores game settings like screen size and speed.
+*   **`src/main.py`**: The entry point that initializes the game.
+*   **`src/game_loop.py`**: Runs the main game loop.
+*   **`src/game_logic.py`**: Contains the core game logic, including snake movement, collision detection, and the WoNQ mode mechanics.
+*   **`src/game_state.py`**: Manages the game's state, including settings and the current screen (menu, playing, etc.).
+*   **`src/ui.py`**: Handles all rendering, including the snake, food, score, and the WoNQ mode "Poop-o-meter".
+*   **`src/poop.py`**: Defines the `Poop` class for the obstacles in WoNQ mode.
+*   **`src/config.py`**: Stores game settings and constants.
