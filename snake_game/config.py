@@ -3,7 +3,8 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 # Game settings
-FPS = 15
+SPEED_LEVELS = [5, 8, 10, 12, 15, 18, 21, 24, 27, 30]
+DEFAULT_SPEED_LEVEL = 4  # Corresponds to 15 FPS
 BLOCK_SIZE = 20
 
 # Colors (R, G, B)

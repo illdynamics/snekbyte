@@ -2,6 +2,8 @@ import random
 from collections import namedtuple
 from enum import Enum
 
+from .config import DEFAULT_SPEED_LEVEL, SPEED_LEVELS
+
 Point = namedtuple('Point', 'x y')
 
 class Direction(Enum):
@@ -149,6 +151,18 @@ class GameState:
         self.food = Food(width, height, block_size, self.snake.body)
         self.score = 0
         self.game_over = False
+        self.started = False
+        self.speed_level = DEFAULT_SPEED_LEVEL
+
+    def start_game(self) -> None:
+        """Starts the game."""
+        self.started = True
+
+    def change_speed(self, delta: int) -> None:
+        """Changes the speed level."""
+        new_level = self.speed_level + delta
+        if 0 <= new_level < len(SPEED_LEVELS):
+            self.speed_level = new_level
 
     def update(self) -> None:
         """
@@ -157,7 +171,7 @@ class GameState:
         This method moves the snake, checks for collisions with walls, itself,
         and food, and updates the score and game-over status accordingly.
         """
-        if self.game_over:
+        if self.game_over or not self.started:
             return
 
         self.snake.move()
