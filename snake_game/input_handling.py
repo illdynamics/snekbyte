@@ -1,43 +1,57 @@
 import pygame
-import sys
-from typing import Tuple
-
+from typing import Any
 from .core import Direction
 
-def handle_input(current_direction: Direction) -> Tuple[Direction, bool]:
+def handle_input() -> Any:
     """
-    Handles user input for controlling the snake and quitting the game.
-    This function processes the event queue from pygame.
-
-    The contract for this function is to:
-    - Return the new direction for the snake.
-    - Return a boolean flag indicating if the game should be terminated.
-
-    Args:
-        current_direction (Direction): The current direction of the snake.
+    Handles user input for controlling the snake and game speed.
 
     Returns:
-        Tuple[Direction, bool]: A tuple containing the new direction and a boolean
-                                indicating if the game should quit.
+        - Direction: If an arrow key is pressed.
+        - "QUIT": If the game should be terminated.
+        - ('speed', delta): If the speed should be changed.
+        - None: If there is no relevant input.
     """
-    new_direction = current_direction
-    quit_flag = False
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            quit_flag = True
+            return "QUIT"
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                quit_flag = True
-            # The game logic in core.Snake.change_direction prevents
-            # the snake from reversing, so we just pass the new direction intent.
+                return "QUIT"
+            # Directions
             elif event.key == pygame.K_UP:
-                new_direction = Direction.UP
+                return Direction.UP
             elif event.key == pygame.K_DOWN:
-                new_direction = Direction.DOWN
+                return Direction.DOWN
             elif event.key == pygame.K_LEFT:
-                new_direction = Direction.LEFT
+                return Direction.LEFT
             elif event.key == pygame.K_RIGHT:
-                new_direction = Direction.RIGHT
+                return Direction.RIGHT
+            # Speed control
+            elif event.key == pygame.K_COMMA: # <
+                return ('speed', -1)
+            elif event.key == pygame.K_PERIOD: # >
+                return ('speed', 1)
+    return None # No relevant input
 
-    return new_direction, quit_flag
+def handle_game_over_input() -> str | None:
+    """
+    Handles input for the game over menu.
+
+    Returns:
+        - "SWITCH": To switch between menu options.
+        - "SELECT": To select the current option.
+        - "QUIT": To quit the game.
+        - None: If there is no relevant input.
+    """
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            return "QUIT"
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                return "QUIT"
+            elif event.key in (pygame.K_UP, pygame.K_DOWN):
+                return "SWITCH"
+            elif event.key == pygame.K_RETURN:
+                return "SELECT"
+    return None
