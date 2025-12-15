@@ -1,4 +1,4 @@
-# Snek-Game
+# SnekByte
 
 This is a classic snake game built with Python and Pygame, with a twist!
 
