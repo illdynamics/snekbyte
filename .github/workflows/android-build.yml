@@ -123,10 +123,22 @@ jobs:
           TITLE="SnekByte Android APK v1.0.0 (build ${GITHUB_RUN_NUMBER})"
 
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release edit "$TAG"               --title "$TITLE"               --notes-file RELEASE_NOTES.md               --latest
-            gh release upload "$TAG" SnekByte.apk SnekByte.apk.sha256 --clobber
+            gh release edit "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "$TITLE" \
+              --notes-file RELEASE_NOTES.md \
+              --latest
+            gh release upload "$TAG" SnekByte.apk SnekByte.apk.sha256 \
+              --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$TAG"               SnekByte.apk               SnekByte.apk.sha256               --target "$GITHUB_SHA"               --title "$TITLE"               --notes-file RELEASE_NOTES.md               --latest
+            gh release create "$TAG" \
+              SnekByte.apk \
+              SnekByte.apk.sha256 \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "$TITLE" \
+              --notes-file RELEASE_NOTES.md \
+              --latest
           fi
 
           echo "Released $TAG with SnekByte.apk (sha256: $APK_SHA256)"
