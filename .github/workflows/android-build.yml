@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build-debug-apk:
     name: Build + verify SnekByte debug APK
@@ -71,19 +75,58 @@ jobs:
             dist/android/build-receipt.txt
           if-no-files-found: error
 
-  # ---------------------------------------------------------------------------
-  # Release APK (OPTIONAL): enable this job only after you have added a private
-  # keystore as a GitHub Actions secret. The workflow never embeds secrets.
-  #
-  # 1. Create: keytool -genkey -v -keystore snekbyte-release.jks -keyalg RSA \
-  #      -keysize 2048 -validity 10000 -alias snekbyte
-  # 2. base64 -i snekbyte-release.jks | pbcopy  → store as secret KEYSTORE_B64
-  #    (also store KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD)
-  # 3. Uncomment the job below and add a release signingConfig in
-  #    android-app/android/app/build.gradle that reads those secrets.
-  # ---------------------------------------------------------------------------
-  # build-release-apk:
-  #   name: Build SnekByte release APK (requires keystore secret)
-  #   runs-on: ubuntu-latest
-  #   if: ${{ secrets.KEYSTORE_B64 != '' }}
-  #   ...
+  publish-apk-release:
+    name: Publish APK GitHub Release
+    needs: build-debug-apk
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Download verified APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: snekbyte-debug-apk
+          path: release
+
+      - name: Prepare APK release asset
+        working-directory: release
+        run: |
+          set -euo pipefail
+          SOURCE_APK="snekbyte-debug.apk"
+          ASSET_APK="SnekByte.apk"
+
+          test -s "$SOURCE_APK"
+          unzip -l "$SOURCE_APK" | grep -q 'AndroidManifest.xml'
+          cp "$SOURCE_APK" "$ASSET_APK"
+          sha256sum "$ASSET_APK" > "$ASSET_APK.sha256"
+
+          {
+            echo "### SnekByte Android APK"
+            echo ""
+            echo "- APK: \`$ASSET_APK\`"
+            echo "- SHA-256: \`$(awk '{print $1}' "$ASSET_APK.sha256")\`"
+            echo "- Source commit: \`${GITHUB_SHA}\`"
+            echo ""
+            echo "Install with: \`adb install -r $ASSET_APK\`"
+          } > RELEASE_NOTES.md
+
+          echo "APK_SHA256=$(awk '{print $1}' "$ASSET_APK.sha256")" >> "$GITHUB_ENV"
+
+      - name: Create or update GitHub Release with APK
+        working-directory: release
+        run: |
+          set -euo pipefail
+          TAG="android-v1.0.0-${GITHUB_RUN_NUMBER}"
+          TITLE="SnekByte Android APK v1.0.0 (build ${GITHUB_RUN_NUMBER})"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release edit "$TAG"               --title "$TITLE"               --notes-file RELEASE_NOTES.md               --latest
+            gh release upload "$TAG" SnekByte.apk SnekByte.apk.sha256 --clobber
+          else
+            gh release create "$TAG"               SnekByte.apk               SnekByte.apk.sha256               --target "$GITHUB_SHA"               --title "$TITLE"               --notes-file RELEASE_NOTES.md               --latest
+          fi
+
+          echo "Released $TAG with SnekByte.apk (sha256: $APK_SHA256)"

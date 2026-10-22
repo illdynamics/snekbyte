@@ -61,6 +61,10 @@ Verify the artifact:
 bash android-app/scripts/verify-apk.sh
 ```
 
+Every successful `main` build is also published as a GitHub Release. The
+installable release asset is the verified APK itself, named `SnekByte.apk`,
+with a matching `SnekByte.apk.sha256` checksum.
+
 ---
 
 ## 3. Install / update / uninstall
