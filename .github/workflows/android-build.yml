@@ -42,8 +42,13 @@ jobs:
             https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
           unzip -q "$RUNNER_TEMP/clt.zip" -d "$ANDROID_HOME/cmdline-tools"
           mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
+          # `yes` exits with SIGPIPE once sdkmanager has consumed the
+          # license prompts. Disable pipefail only for this pipeline so the
+          # normal broken pipe is not reported as an SDK installation failure.
+          set +o pipefail
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
             "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          set -o pipefail
           echo "ANDROID_HOME=$ANDROID_HOME" >> "$GITHUB_ENV"
           echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> "$GITHUB_ENV"
 
