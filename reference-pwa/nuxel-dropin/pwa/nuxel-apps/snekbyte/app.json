@@ -1,0 +1,18 @@
+{
+  "id": "org.nuxel.SnekByte",
+  "name": "SnekByte",
+  "icon": "/pwa/nuxel-apps/snekbyte/icons/icon-192.png",
+  "color": "#a0ff51",
+  "category": "games",
+  "type": "pwa",
+  "url": "/pwa/nuxel-apps/snekbyte/index.html",
+  "description": "Original Python SnekByte game ported for Nuxel with touch controls and WoNQ Poop-o-meter",
+  "capabilities": [
+    "input:keyboard",
+    "input:touch"
+  ],
+  "docked": false,
+  "network": "none",
+  "offline_first": true,
+  "provenance": "Ported from attached snekbyte-main (2).zip; parity fixture shipped under nuxel-dropin/tools/s10plus/a33/snekbyte"
+}

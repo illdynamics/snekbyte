@@ -18,3 +18,7 @@ env/
 # IDE files
 .idea/
 .vscode/
+
+# Local scratch toolchain (SDK/JDK) - never commit
+.scratch-snakepwn6000/
+.codeseeq/

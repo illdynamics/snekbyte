@@ -1,0 +1,137 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        9441dc0 com.illdynamics.snekbyte/.MainActivity filter 5915af9
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        e31ca3e com.illdynamics.snekbyte/androidx.profileinstaller.ProfileInstallReceiver filter 103adb5
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        e31ca3e com.illdynamics.snekbyte/androidx.profileinstaller.ProfileInstallReceiver filter c6309f
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      androidx.profileinstaller.action.SKIP_FILE:
+        e31ca3e com.illdynamics.snekbyte/androidx.profileinstaller.ProfileInstallReceiver filter 12d55ec
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        e31ca3e com.illdynamics.snekbyte/androidx.profileinstaller.ProfileInstallReceiver filter c7c4c4a
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+
+Domain verification status:
+
+Permissions:
+  Permission [com.illdynamics.snekbyte.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (406b2f1):
+    sourcePackage=com.illdynamics.snekbyte
+    uid=10208 gids=[] type=0 prot=signature
+    perm=PermissionInfo{d9ba54e com.illdynamics.snekbyte.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  com.illdynamics.snekbyte/androidx.startup.InitializationProvider:
+    Provider{ff7566f com.illdynamics.snekbyte/androidx.startup.InitializationProvider}
+  com.illdynamics.snekbyte/androidx.core.content.FileProvider:
+    Provider{17fcf7c com.illdynamics.snekbyte/androidx.core.content.FileProvider}
+
+ContentProvider Authorities:
+  [com.illdynamics.snekbyte.fileprovider]:
+    Provider{17fcf7c com.illdynamics.snekbyte/androidx.core.content.FileProvider}
+      applicationInfo=ApplicationInfo{8c5ced6 com.illdynamics.snekbyte}
+  [com.illdynamics.snekbyte.androidx-startup]:
+    Provider{ff7566f com.illdynamics.snekbyte/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{c27557 com.illdynamics.snekbyte}
+
+Key Set Manager:
+  [com.illdynamics.snekbyte]
+      Signing KeySets: 60
+
+Packages:
+  Package [com.illdynamics.snekbyte] (6733fa6):
+    appId=10208
+    pkg=Package{24cea8b com.illdynamics.snekbyte}
+    codePath=/data/app/~~j3KuKECoG-eaXVfP2DKTdA==/com.illdynamics.snekbyte-q05utI2Doln7FaYhJ1BADg==
+    resourcePath=/data/app/~~j3KuKECoG-eaXVfP2DKTdA==/com.illdynamics.snekbyte-q05utI2Doln7FaYhJ1BADg==
+    legacyNativeLibraryDir=/data/app/~~j3KuKECoG-eaXVfP2DKTdA==/com.illdynamics.snekbyte-q05utI2Doln7FaYhJ1BADg==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=1 minSdk=23 targetSdk=35
+    minExtensionVersions=[]
+    versionName=1.0
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2026-10-22 17:16:30
+    lastUpdateTime=2026-10-22 17:16:30
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{cb86768 version:2, signatures:[c52426d4], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      com.illdynamics.snekbyte.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      com.illdynamics.snekbyte.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+    install permissions:
+      com.illdynamics.snekbyte.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+    User 0: ceDataInode=361074 deDataInode=57967 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=/data/user/0/com.illdynamics.snekbyte
+      firstInstallTime=2026-10-22 17:16:30
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/EmulationPixel7/EmulationPixel7Overlay.apk
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      legacy overlay paths:
+        /product/overlay/EmulationPixel7/EmulationPixel7Overlay.apk
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      runtime permissions:
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+  queries via component:
+    com.google.android.as:
+      com.illdynamics.snekbyte
+    com.google.android.settings.intelligence:
+      com.illdynamics.snekbyte
+  queryable via interaction:
+    User 0:
+      [com.android.localtransport,com.android.settings,com.android.location.fused,com.android.dynsystem,com.android.keychain,android,com.android.providers.settings,com.android.inputdevices,com.android.server.telecom,com.android.DeviceAsWebcam,com.android.emulator.multidisplay]:
+        com.illdynamics.snekbyte
+      [com.google.android.gsf,com.google.android.gms]:
+        com.illdynamics.snekbyte
+      com.google.android.webview:
+        com.illdynamics.snekbyte
+      com.google.android.inputmethod.latin:
+        com.illdynamics.snekbyte
+      com.illdynamics.snekbyte:
+        com.google.android.webview
+  queryable via uses-library:
+
+Dexopt state:
+  [com.illdynamics.snekbyte]
+    path: /data/app/~~j3KuKECoG-eaXVfP2DKTdA==/com.illdynamics.snekbyte-q05utI2Doln7FaYhJ1BADg==/base.apk
+      arm64: [status=run-from-apk] [reason=unknown] [primary-abi]
+        [location is error]
+
+Compiler stats:
+  [com.illdynamics.snekbyte]
+    (No recorded stats)

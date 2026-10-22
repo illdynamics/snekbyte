@@ -1,0 +1,21 @@
+{
+  "name": "snekbyte-android",
+  "version": "1.0.0",
+  "description": "SnekByte WoNQ snake game as a standalone Android app (Capacitor wrapper around the Nuxel PWA).",
+  "private": true,
+  "scripts": {
+    "stage": "bash scripts/stage-web-assets.sh",
+    "sync": "npm run stage && cap sync android",
+    "build:debug": "bash scripts/build-debug.sh",
+    "verify": "bash scripts/verify-apk.sh"
+  },
+  "dependencies": {
+    "@capacitor/android": "7.6.9",
+    "@capacitor/app": "7.1.2",
+    "@capacitor/core": "7.6.9"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "7.6.9",
+    "typescript": "5.7.3"
+  }
+}

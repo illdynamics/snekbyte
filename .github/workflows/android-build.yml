@@ -1,0 +1,84 @@
+name: android-apk-build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'android-app/**'
+      - 'reference-pwa/**'
+      - '.github/workflows/android-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-debug-apk:
+    name: Build + verify SnekByte debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: android-app/package-lock.json
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install Android SDK (official Google cmdline-tools)
+        run: |
+          set -euo pipefail
+          export ANDROID_HOME="$RUNNER_TEMP/android-sdk"
+          mkdir -p "$ANDROID_HOME/cmdline-tools"
+          curl -sSL -o "$RUNNER_TEMP/clt.zip" \
+            https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+          unzip -q "$RUNNER_TEMP/clt.zip" -d "$ANDROID_HOME/cmdline-tools"
+          mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
+            "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          echo "ANDROID_HOME=$ANDROID_HOME" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> "$GITHUB_ENV"
+
+      - name: Build debug APK
+        working-directory: android-app
+        run: |
+          # build-debug.sh auto-detects the SDK/JDK from the env set above.
+          bash scripts/build-debug.sh
+
+      - name: Verify APK
+        run: bash android-app/scripts/verify-apk.sh
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: snekbyte-debug-apk
+          path: |
+            dist/android/snekbyte-debug.apk
+            dist/android/snekbyte-debug.apk.sha256
+            dist/android/build-receipt.txt
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # Release APK (OPTIONAL): enable this job only after you have added a private
+  # keystore as a GitHub Actions secret. The workflow never embeds secrets.
+  #
+  # 1. Create: keytool -genkey -v -keystore snekbyte-release.jks -keyalg RSA \
+  #      -keysize 2048 -validity 10000 -alias snekbyte
+  # 2. base64 -i snekbyte-release.jks | pbcopy  → store as secret KEYSTORE_B64
+  #    (also store KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD)
+  # 3. Uncomment the job below and add a release signingConfig in
+  #    android-app/android/app/build.gradle that reads those secrets.
+  # ---------------------------------------------------------------------------
+  # build-release-apk:
+  #   name: Build SnekByte release APK (requires keystore secret)
+  #   runs-on: ubuntu-latest
+  #   if: ${{ secrets.KEYSTORE_B64 != '' }}
+  #   ...
