@@ -122,7 +122,7 @@ jobs:
           TAG="android-v1.0.0-${GITHUB_RUN_NUMBER}"
           TITLE="SnekByte Android APK v1.0.0 (build ${GITHUB_RUN_NUMBER})"
 
-          if gh release view "$TAG" >/dev/null 2>&1; then
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release edit "$TAG"               --title "$TITLE"               --notes-file RELEASE_NOTES.md               --latest
             gh release upload "$TAG" SnekByte.apk SnekByte.apk.sha256 --clobber
           else
